@@ -47,14 +47,16 @@ Self-Driving Car Engineer Nanodegree Program
 ## Model
 
 The kinetic model is used in this project (following the quiz solution provided by Udacity).
-`
+
+```
 // x_[t+1] = x[t] + v[t] * cos(psi[t]) * dt
 // y_[t+1] = y[t] + v[t] * sin(psi[t]) * dt
 // psi_[t+1] = psi[t] + v[t] / Lf * delta[t] * dt
 // v_[t+1] = v[t] + a[t] * dt
 // cte[t+1] = f(x[t]) - y[t] + v[t] * sin(epsi[t]) * dt
 // epsi[t+1] = psi[t] - psides[t] + v[t] * delta[t] / Lf * dt
-`
+```
+
 ## Timestep Length and Elapsed Duration (N & dt)
 
 N & dt are set in MPC.h.
@@ -66,10 +68,12 @@ A short planning time as 1s makes sense because the roadway condition is rapidly
 
 All the points was first converted to and then calculated under the vehicle coordinate system.
 The following equations were used to convert points from global coordinate system (x,y) to the vehicle coordinate system (x',y'):
-`
+
+```
 x'=cos(psi) * (ptsx[i] - x) + sin(psi) * (ptsy[i] - y);
 y'=-sin(psi) * (ptsx[i] - x) + cos(psi) * (ptsy[i] - y);
-`
+```
+
 where ptsx,ptsy and psi are the vechile position and direction in the global coordinate system.
 
 Then based on the fitted poly as object and the vehicle state as input, the solver is called to minimize the cost function over the planning time.
@@ -79,7 +83,8 @@ The the cost function is consist of not only the amplitude of cte, difference be
 The weights of each component in the cost function is critical to the final optimal soluation. to make the vehicle driving smoother, a large weight needs to be assigned to the changing rate of steering angle.
 
 Eventually the weights of all components in the cost function were set in MPC.h as follows:
-`
+
+```
 const double cte_weight_in_cost = 1;
 const double epsi_weight_in_cost = 1;
 const double v_weight_in_cost = 1;
@@ -87,7 +92,8 @@ const double steer_weight_in_cost = 1;
 const double throttle_weight_in_cost = 10;
 const double steerchange_weight_in_cost = 1000;
 const double throttlechange_weight_in_cost = 1;
-`
+```
+
 To make the driving easier, the desired driving speed was set to 50. This can be changed to a higher value but the weights may need to be adjusted to handle the more fragile system.
 `const double ref_v = 50;`
 
