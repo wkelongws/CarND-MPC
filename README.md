@@ -105,5 +105,5 @@ To handle the latency, the MPC process assumes the steering angle and throttle i
 
 After compiling, the vechiele can run smoothing at around 44-45 mph in the MAC simulator with screen resolution = 640*480 and graphics quality = fastest.
 
-
+The video of this experiment can be found [here](https://youtu.be/InBC-IXcrpg).
 
